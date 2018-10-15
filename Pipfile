@@ -10,6 +10,7 @@ flask-sqlalchemy = "*"
 flask-bcrypt = "*"
 flask-login = "*"
 pillow = "*"
+"autopep8" = "*"
 
 [dev-packages]
 
