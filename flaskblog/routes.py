@@ -82,13 +82,12 @@ def save_picture(form_picture):
     #     app.root_path, 'static/profile_pics', picture_fn)
     picture_path = os.path.join(
         app.root_path, 'static', 'profile_pics', picture_fn)
+    # form_picture.save(picture_path)
 
     output_size = (125, 125)
     i = Image.open(form_picture)
     i.thumbnail(output_size)
     i.save(picture_path)
-
-    # form_picture.save(picture_path)
 
     return picture_fn
 
