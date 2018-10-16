@@ -2,7 +2,7 @@ from run import os
 # import os
 import secrets
 from PIL import Image
-from flask import render_template, url_for, flash, redirect, request
+from flask import render_template, url_for, flash, redirect, request, abort
 from flaskblog import app, db, bcrypt
 from flaskblog.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
 from flaskblog.models import User, Post
@@ -68,13 +68,10 @@ def save_picture(form_picture):
     #     app.root_path, 'static/profile_pics', picture_fn)
     picture_path = os.path.join(
         app.root_path, 'static', 'profile_pics', picture_fn)
-    # form_picture.save(picture_path)
-
     output_size = (125, 125)
     i = Image.open(form_picture)
     i.thumbnail(output_size)
     i.save(picture_path)
-
     return picture_fn
 
 
@@ -111,7 +108,32 @@ def new_post():
         db.session.commit()
         flash('Your post just went live motherfucker', 'info')
         return redirect(url_for('home'))
-    return render_template('create_post.html', title='New Post', form=form)
+    return render_template('create_post.html', title='New Post', form=form, legend='New Post Motherfucker')
+
+
+@app.route('/post/<int:post_id>')
+def post(post_id):
+    post = Post.query.get_or_404(post_id)
+    return render_template('post.html', title=post.title, post=post)
+
+
+@app.route('/post/<int:post_id>/update', methods=['GET', 'POST'])
+@login_required
+def update_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    form = PostForm()
+    if form.validate_on_submit():
+        post.title = form.title.data
+        post.content = form.content.data
+        db.session.commit()
+        flash('You Have Transmogrified Your Post Motherfucker', 'info')
+        return redirect(url_for('post', post_id=post.id))
+    elif request.method == 'GET':
+        form.title.data = post.title
+        form.content.data = post.content
+    return render_template('create_post.html', title='Update This Bitch', form=form, legend='Update This Motherfucker')
 
     # '/Users/markwilde/Flask_Blog/flaskblog/static/profile_pics/picture_fn'
     # /Users/markwilde/Flask_Blog/flaskblog
