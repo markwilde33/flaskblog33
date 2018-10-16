@@ -2,6 +2,16 @@ body {
    background: #fafafa;
    color: #333333;
    margin-top: 5rem;
+   background-image: url(/static/img/bgindex.jpg);
+   background-repeat: no-repeat;
+   background-size: 100% 200%;
+}
+
+@media only screen and (max-width: 850px) {
+   body {
+      background-image: url(/static/img/mobilebg.jpg);
+      background-repeat: no-repeat;
+   }
 }
 
 h1,
