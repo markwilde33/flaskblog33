@@ -135,5 +135,17 @@ def update_post(post_id):
         form.content.data = post.content
     return render_template('create_post.html', title='Update This Bitch', form=form, legend='Update This Motherfucker')
 
+
+@app.route('/post/<int:post_id>/delete', methods=['POST'])
+@login_required
+def delete_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    db.session.delete(post)
+    db.session.commit()
+    flash('You Have Annihilated Your Post Motherfucker', 'info')
+    return redirect(url_for('home'))
+
     # '/Users/markwilde/Flask_Blog/flaskblog/static/profile_pics/picture_fn'
     # /Users/markwilde/Flask_Blog/flaskblog
