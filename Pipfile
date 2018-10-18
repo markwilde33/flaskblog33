@@ -11,6 +11,7 @@ flask-bcrypt = "*"
 flask-login = "*"
 pillow = "*"
 "autopep8" = "*"
+flask-mail = "*"
 
 [dev-packages]
 
