@@ -7,11 +7,9 @@ body {
    background-size: 100% 200%;
 }
 
-/* @media only screen and (max-width: 850px) {
-   body {
-      background-image: url(/static/img/mobilebg.jpg);
-      background-repeat: no-repeat;
-   }
+/* 
+a.navbar-brand {
+   color: red !important;
 } */
 
 h1,
